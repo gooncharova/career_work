@@ -1,0 +1,13 @@
+{% block title %}Главная{% endblock %}
+{% if all_dump_trucks %}
+<ul>
+    {% for dump_truck in all_dump_trucks %}
+    <p>
+        {{dump_truck.number}}, {{dump_truck.model}}, {{dump_truck.carrying}},
+        {{dump_truck.mineral.weight}}
+    </p>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No dump_truck are available.</p>
+{% endif %}
