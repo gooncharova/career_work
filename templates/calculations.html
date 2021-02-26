@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Расчеты{% endblock %}
+{% block content %}
+<h1 class="main__title">Расчеты</h1>
+<table border="1">
+    <caption>Склад</caption>
+    <tr>
+        <th>Название склада</th>
+        <th>Объем до разгрузки, т</th>
+        <th>Объем после разгрузки, т</th>
+        <th>Качественные характеристики после разгрузки</th>
+    </tr>
+    <tr>
+        <td>{{ warehouse.title }}</td>
+        {% for item in warehouse.mineral_weight_warehouse.all %}
+        <td>{{ item.weight }}</td>
+        {% endfor %}
+        <td>ччч</td>
+        <td>ччч</td>
+    </tr>
+</table>
+{% endblock %}

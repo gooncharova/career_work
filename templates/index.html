@@ -1,13 +1,46 @@
+{% extends "base.html" %}
 {% block title %}Главная{% endblock %}
+{% block content %}
+{% load extras %}
+<h1 class="main__title">Главная</h1>
 {% if all_dump_trucks %}
-<ul>
-    {% for dump_truck in all_dump_trucks %}
-    <p>
-        {{dump_truck.number}}, {{dump_truck.model}}, {{dump_truck.carrying}},
-        {{dump_truck.mineral.weight}}
-    </p>
-    {% endfor %}
-</ul>
+{% for dump_truck in all_dump_trucks %}
+<table border="1">
+    <caption>Самосвал {{dump_truck.model}} {{dump_truck.number}}</caption>
+    <tr>
+        <th>Бортовой номер</th>
+        <th>Модель</th>
+        <th>Макс. грузоподъемность, т</th>
+        <th>Текущий вес, т</th>
+        <th>Перегруз, %</th>
+        <th>Координаты разгрузки (x, y)</th>
+    </tr>
+    <tr>
+        <td>{{dump_truck.number}}</td>
+        <td>{{dump_truck.model}}</td>
+        <td>{{dump_truck.carrying}}</td>
+        {% for item in dump_truck.mineral_weight_dumptruсk.all %}
+        <td>{{item.weight}}</td>
+        <td>{{ item.weight|dump_truck_overload:dump_truck.carrying }}</td>
+        {% endfor %}
+        <td>
+            <form method="post" enctype="multipart/form-data">
+                <label for="id_x_coordinate">x:</label>
+                <input type="number" name="x_coordinate" required id="id_x_coordinate"> <br>
+                <label for="id_y_coordinate">y:</label>
+                <input type="number" name="y_coordinate" required id="id_y_coordinate">
+            </form>
+        </td>
+    </tr>
+</table>
+{{form}}
+{% for warehouse in dump_truck.warehouse.all %}
+<div class="col-md-6 offset-md-4">
+    <button onclick="window.location.href = '{% url 'calculations' warehouse.title %}';">Рассчитать</button>
+</div>
+{% endfor %}
+{% endfor %}
 {% else %}
 <p>No dump_truck are available.</p>
 {% endif %}
+{% endblock %}
