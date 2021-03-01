@@ -7,4 +7,4 @@ class CoordinateForm(forms.ModelForm):
 
     class Meta:
         model = Coordinate
-        fields = ('x_coordinate', 'y_coordinate')
+        fields = ['x_coordinate', 'y_coordinate']

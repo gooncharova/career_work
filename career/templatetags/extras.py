@@ -1,8 +1,8 @@
+from career_work.settings import ONE_HUNDRED_PER
+
 from django import template
 
 register = template.Library()
-
-ONE_HUNDRED_PER = 100
 
 
 @register.filter(name='dump_truck_overload')

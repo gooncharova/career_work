@@ -11,7 +11,6 @@ class DumpTruckMineralInLine(admin.TabularInline):
 
 class DumpTruckAdmin(admin.ModelAdmin):
     inlines = (DumpTruckMineralInLine, )
-    filter_horizontal = ('warehouse',)
     list_display = ('number', 'model')
 
 

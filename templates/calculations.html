@@ -12,11 +12,9 @@
     </tr>
     <tr>
         <td>{{ warehouse.title }}</td>
-        {% for item in warehouse.mineral_weight_warehouse.all %}
-        <td>{{ item.weight }}</td>
-        {% endfor %}
-        <td>ччч</td>
-        <td>ччч</td>
+        <td>{{ warehouse_mineral_weight_bef }}</td>
+        <td>{{ warehouse_mineral_weight_aft }}</td>
+        <td>{{mineral.silicon_content}}% SiO2, {{mineral.iron_content}}% Fe</td>
     </tr>
 </table>
 {% endblock %}

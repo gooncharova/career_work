@@ -31,17 +31,9 @@ class Coordinate(models.Model):
 
 class Warehouse(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название склада')
-    mineral = models.ManyToManyField(Mineral, related_name='warehouse',
-                                     through='WarehouseMineral',
-                                     through_fields=('warehouse', 'mineral'),
-                                     verbose_name='Руда на складе')
     polygon_coord = models.ManyToManyField(Coordinate,
                                            related_name='warehouse',
                                            verbose_name='Координаты полигона')
-    # x_coordinate = models.IntegerField(
-    #     verbose_name='Координата склада x')
-    # y_coordinate = models.IntegerField(
-    #     verbose_name='Координата склада y')
 
     class Meta:
         verbose_name = 'склад'
@@ -58,12 +50,9 @@ class DumpTruck(models.Model):
                              verbose_name='Модель самосвала')
     carrying = models.PositiveIntegerField(
         verbose_name='Максимальная грузоподъемность, т')
-    mineral = models.ManyToManyField(Mineral, related_name='dump_truck',
-                                     through='DumpTruckMineral',
-                                     through_fields=('dump_truck', 'mineral'),
-                                     verbose_name='Руда в самосвале')
-    warehouse = models.ManyToManyField(Warehouse, related_name='dump_truck',
-                                       verbose_name='Склад для разгрузки')
+    warehouse = models.ForeignKey(Warehouse, related_name='dump_truck',
+                                  on_delete=models.CASCADE,
+                                  verbose_name='Склад для разгрузки')
 
     class Meta:
         verbose_name = 'самосвал'
@@ -77,11 +66,11 @@ class DumpTruckMineral(models.Model):
     weight = models.PositiveIntegerField(
         verbose_name='Масса руды, т')
     dump_truck = models.ForeignKey(DumpTruck, on_delete=models.CASCADE,
-                                   related_name='mineral_weight_dumptruсk',
+                                   related_name='mineral_dumptruсk',
                                    verbose_name='Самосвал')
     mineral = models.ForeignKey(
         Mineral, on_delete=models.CASCADE,
-        related_name='mineral_weight_dumptruсk',
+        related_name='mineral_dumptruсk',
         verbose_name='Руда')
 
     class Meta:
@@ -96,11 +85,11 @@ class WarehouseMineral(models.Model):
     weight = models.PositiveIntegerField(
         verbose_name='Масса руды, т')
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE,
-                                  related_name='mineral_weight_warehouse',
+                                  related_name='mineral_warehouse',
                                   verbose_name='Склад')
     mineral = models.ForeignKey(
         Mineral, on_delete=models.CASCADE,
-        related_name='mineral_weight_warehouse',
+        related_name='mineral_warehouse',
         verbose_name='Руда')
 
     class Meta:
