@@ -1,0 +1,1 @@
+web: gunicorn career_work.wsgi --log-file -
